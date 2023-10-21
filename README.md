@@ -1,68 +1,96 @@
-# VueReact
-
-VueReact is a lightweight utility library that allows Vue developers to leverage the reactivity features of Vue while using React components. It provides functions for creating reactive references and values, as well as a watch function for monitoring changes.
-
-## Usage
+## Vue Reactivity Functions Documentation
 
 ### `ref<T>(initialValue: T): { value: T } & IVueReactReactiveValue`
 
 Creates a reactive reference with an initial value.
 
-#### Parameters
+- **Parameters**:
+  - `initialValue` (T): The initial value of the reference.
 
-- `initialValue`: The initial value of the reference.
+- **Returns**:
+  - `{ value: T } & IVueReactReactiveValue`: An object containing the reactive value and methods for subscription and unsubscription.
 
-#### Returns
+- **Methods**:
+  - `_subscribe(callback: updateFunction)`: Subscribe a callback function to be notified of value changes.
+  - `_unsubscribe(callback: updateFunction)`: Unsubscribe a previously registered callback.
 
-An object with the following properties:
+- **Usage**:
 
-- `value`: The current value of the reference.
-- `_subscribe(callback: updateFunction)`: Subscribe a callback function to be notified of updates.
-- `_unsubscribe(callback: updateFunction)`: Unsubscribe a previously subscribed callback.
+  ```jsx
+  import { ref } from "./vue-reactivity";
 
-### `reactive<T>(initialValue: T): { value: T } & IVueReactReactiveValue`
+  const myRef = ref(42);
 
-Creates a reactive value with an initial value.
+  // Access the reactive value
+  console.log(myRef.value); // Output: 42
 
-#### Parameters
+  // Subscribe to value changes
+  myRef._subscribe((newValue, oldValue) => {
+    console.log(`Value changed from ${oldValue} to ${newValue}`);
+  });
 
-- `initialValue`: The initial value of the reactive value.
+  // Update the value
+  myRef.value = 99; // Output: "Value changed from 42 to 99"
+  ```
 
-#### Returns
+### `reactive<T extends object>(initialValue: T): T & IVueReactReactiveValue`
 
-An object with the following properties:
+Creates a reactive value with an initial object.
 
-- `value`: The current value of the reactive value.
-- `_subscribe(callback: updateFunction)`: Subscribe a callback function to be notified of updates.
-- `_unsubscribe(callback: updateFunction)`: Unsubscribe a previously subscribed callback.
+- **Parameters**:
+  - `initialValue` (T): The initial object to be made reactive.
+
+- **Returns**:
+  - `T & IVueReactReactiveValue`: A reactive object with methods for subscription and unsubscription.
+
+- **Methods**:
+  - `_subscribe(callback: updateFunction)`: Subscribe a callback function to be notified of value changes.
+  - `_unsubscribe(callback: updateFunction)`: Unsubscribe a previously registered callback.
+
+- **Usage**:
+
+  ```jsx
+  import { reactive } from "./vue-reactivity";
+
+  const myReactive = reactive({ name: "John", age: 30 });
+
+  // Access the reactive properties
+  console.log(myReactive.name); // Output: "John"
+  console.log(myReactive.age); // Output: 30
+
+  // Subscribe to value changes
+  myReactive._subscribe((newValue, oldValue) => {
+    console.log(`Property changed from ${oldValue} to ${newValue}`);
+  });
+
+  // Update a property
+  myReactive.name = "Jane"; // Output: "Property changed from John to Jane"
+  ```
 
 ### `watch(prop: { value: any } & IVueReactReactiveValue, callback: updateFunction)`
 
 Watches changes on a reactive value.
 
-#### Parameters
+- **Parameters**:
+  - `prop` ({ value: any } & IVueReactReactiveValue): The reactive value to watch.
+  - `callback` (updateFunction): The callback function to be executed when the value changes.
 
-- `prop`: The reactive value to watch.
-- `callback`: A callback function to be called when the value changes. It receives the new value as the first argument and the old value as the second argument.
+- **Usage**:
 
-#### Example
+  ```jsx
+  import { watch } from "./vue-reactivity";
 
-```jsx
-import { ref, reactive, watch } from 'vuereact';
+  const myRef = ref(42);
 
-const App = () => {
-  const count = ref(0);
-  const message = reactive('Hello');
-
-  watch(count, (newValue, oldValue) => {
-    console.log(`Count changed from ${oldValue} to ${newValue}`);
+  // Watch for changes
+  watch(myRef, (newValue, oldValue) => {
+    console.log(`Value changed from ${oldValue} to ${newValue}`);
   });
 
-  return (
-    <div>
-      <button onClick={() => count.value++}>Increment</button>
-      <div>{message.value}</div>
-    </div>
-  );
-};
-```
+  // Update the value
+  myRef.value = 99; // Output: "Value changed from 42 to 99"
+  ```
+
+---
+
+Please ensure to import the functions correctly according to your project setup. This documentation assumes that the functions are located in a file named `vue-reactivity.js` in the same directory.
