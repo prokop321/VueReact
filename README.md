@@ -1,6 +1,6 @@
-## Vue Reactivity Functions Documentation
+### Vue Reactivity Functions for react
 
-### `ref<T>(initialValue: T): { value: T } & IVueReactReactiveValue`
+## `ref<T>(initialValue: T): { value: T } & IVueReactReactiveValue`
 
 Creates a reactive reference with an initial value.
 
