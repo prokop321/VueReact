@@ -2,14 +2,6 @@
 
 VueReact is a lightweight utility library that allows Vue developers to leverage the reactivity features of Vue while using React components. It provides functions for creating reactive references and values, as well as a watch function for monitoring changes.
 
-## Installation
-
-You can install VueReact via npm:
-
-```bash
-npm install vuereact
-```
-
 ## Usage
 
 ### `ref<T>(initialValue: T): { value: T } & IVueReactReactiveValue`
@@ -74,11 +66,3 @@ const App = () => {
   );
 };
 ```
-
-## License
-
-VueReact is licensed under the MIT License. See [LICENSE](link-to-license) for more information.
-
----
-
-Feel free to customize the documentation further based on your specific preferences or additional details you'd like to include. Once you're satisfied with the documentation, you can publish it on NPM for Vue developers to use.
